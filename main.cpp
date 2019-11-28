@@ -27,78 +27,89 @@ int main(int argc, char** argv) {
     Arvore *arv = new Arvore;
 
     //Controle de arquivo (Abrindo arquivo e fazendo sua leitura)
-    int control = 1; // 0 for test read file, 1 for manual insertion
+    int control = 0; // 0 for test read file, 1 for manual insertion
     if (control) {
-        arv->Insere(15);
-        arv->Insere(7);
-        arv->Insere(30);
-        arv->Insere(30);
-        arv->Insere(31);
         arv->Insere(29);
-        arv->Insere(1);
-        arv->Insere(2);
-        arv->Insere(5);
-        arv->Insere(8);
-        arv->Insere(4);
-        cout << arv->Remove(15) << " ";
-        //    cout << arv->Busca(16) << " ";
-        arv->Insere(99);
+        arv->Insere(15);
+        arv->Insere(27);
+        arv->Insere(10);
+        arv->Insere(23);
+        cout << arv->Remove(29) << " ";
+        cout << arv->Remove(27) << " "; //TODO remoção da segunda raiz
+        //cout << arv->Busca(16) << " ";
+        //arv->Insere(99);
     } else {
         ofstream outFile;
-        ifstream arvore;
+        ifstream dados;
         bool status;
         int tam = 0;
         char op;
-        int dado;
+        int valor;
 
-        status = readFile(arvore, "arquivo.txt");
+        status = readFile(dados, "arquivo.txt");
         //Teste de abertura de arquivo
         if (!status) {
             cout << "Arquivo não pode ser aberto para leitura." << endl;
             cout << "Programa terminando..." << endl;
         } else {
-            //Leitura do arquivo
-            while (!arvore.eof()) {
-                arvore >> op;
+            //Leitura do arquivo       
+            dados >> op;
+            while (!dados.eof()) {
                 switch (op) {
                         //inserir, remover, buscar e estado
                     case 'i':
                     {
-                        arvore >> tam;
-                        for (int i = 0; i < tam; i++) {
-                            if (i == 0) {
-                                arvore >> dado;
-                                arv->raiz = new No(dado);
-                                cout << dado;
-                            } else {
-                                arvore >> dado;
-                                arv->Insere(dado);
-                                cout << dado;
-                            }
-
+                        dados >> tam;
+                        for (int j = 0; j < tam; j++) {
+                            dados >> valor;
+                            arv->Insere(valor);
+                            cout << "inserindo: " << valor << endl;
                         }
+                        dados >> op;
                         break;
                     }
+
                     case 'r':
+                    {
+                        dados >> tam;
+                        for (int j = 0; j < tam; j++) {
+                            dados >> valor;
+                            arv->Remove(valor);
+                        }
+                        dados >> op;
                         break;
+                    }
+
                     case 'b':
                     {
-                        arvore >> tam;
+
+                        dados >> tam;
                         for (int i = 0; i < tam; i++) {
-                            arvore >> dado;
-                            cout << arv->Busca(dado) << " ";
+                            dados >> valor;
+                            int busca = arv->Busca(valor);
+                            if (busca == 1)
+                                cout << "O valor: " << valor << " esta na arvore." << endl;
+                            else
+                                cout << "O valor: " << valor << " não esta na arvore." << endl;
                         }
+                        dados >> op;
                         break;
                     }
+
                     case 'e':
+                    {
                         break;
+                    }
+
                     default:
+                    {
                         break;
+                    }
                 }
             }
         }
     }
-    arv->Pos_Ordem();
+    arv->Em_Ordem();
     return 0;
 }
 
