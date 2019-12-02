@@ -28,6 +28,7 @@ public:
     void Em_Ordem(No *raiz);
     bool Busca(int valor, No *raiz);
     No *Captura_Maximo(No *raiz);
+    void Estado(No *raiz);
     bool Remove(int valor, No *raiz, No *pai);
     No *Insere(No *raiz, No *n);
     int dado;
@@ -43,6 +44,7 @@ public:
     void Em_Ordem();
     void Insere(int valor);
     bool Busca(int valor);
+    void Estado();
     bool Remove(int valor);
     No *Captura_Maximo();
     No *raiz;

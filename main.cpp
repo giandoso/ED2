@@ -56,51 +56,53 @@ int main(int argc, char** argv) {
             dados >> op;
             while (!dados.eof()) {
                 switch (op) {
-                        //inserir, remover, buscar e estado
                     case 'i':
-                    {
+                    { //inserir
                         dados >> tam;
                         for (int j = 0; j < tam; j++) {
                             dados >> valor;
                             arv->Insere(valor);
-                            cout << "inserindo: " << valor << endl;
+                            cout << "Inserindo o valor " << valor << endl;
                         }
                         dados >> op;
                         break;
                     }
-
                     case 'r':
-                    {
+                    { //remover
                         dados >> tam;
                         for (int j = 0; j < tam; j++) {
                             dados >> valor;
-                            arv->Remove(valor);
+                            int checaRemove = arv->Remove(valor);
+                            if (checaRemove)
+                                cout << "O valor " << valor << " foi removido com sucesso" << endl;
+                            else
+                                cout << "O valor " << valor << " não está presente na arvore" << endl;
                         }
                         dados >> op;
                         break;
                     }
-
                     case 'b':
-                    {
-
+                    { //buscar
                         dados >> tam;
                         for (int i = 0; i < tam; i++) {
                             dados >> valor;
-                            int busca = arv->Busca(valor);
-                            if (busca == 1)
-                                cout << "O valor: " << valor << " esta na arvore." << endl;
+                            int checaBusca = arv->Busca(valor);
+                            if (checaBusca)
+                                cout << "O valor " << valor << " está na arvore." << endl;
                             else
-                                cout << "O valor: " << valor << " não esta na arvore." << endl;
+                                cout << "O valor " << valor << " não está na arvore." << endl;
                         }
                         dados >> op;
                         break;
                     }
-
                     case 'e':
-                    {
+                    {//TODO
                         break;
                     }
-
+                    case 'f':
+                    {//TODO
+                        break;
+                    }
                     default:
                     {
                         break;
@@ -109,7 +111,12 @@ int main(int argc, char** argv) {
             }
         }
     }
+    cout << endl << "Arvore em Ordem: " << endl;
     arv->Em_Ordem();
+    cout << endl << endl << "Arvore em Pré-Ordem: " << endl;
+    arv->Pre_Ordem();
+    cout << endl << endl << "Arvore em Pós-Ordem: " << endl;
+    arv->Pos_Ordem();
+    cout << endl;
     return 0;
 }
-

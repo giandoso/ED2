@@ -34,6 +34,10 @@ void Arvore::Em_Ordem() {
     raiz->Em_Ordem(raiz);
 }
 
+void Arvore::Estado(){
+    //TODO
+}
+
 void Arvore::Insere(int valor) {
     No *n = new No(valor);
     if (qtde == 0) {
@@ -80,6 +84,10 @@ No * No::Insere(No *raiz, No * n) {
     else
         raiz->dir = Insere(raiz->dir, n);
     return raiz;
+}
+
+void No::Estado(No *raiz){
+    //TODO
 }
 
 void No::Pre_Ordem(No *raiz) {
