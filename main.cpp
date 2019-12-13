@@ -34,9 +34,8 @@ int main(int argc, char** argv) {
         arv->Insere(27);
         arv->Insere(10);
         arv->Insere(23);
-        cout << arv->Remove(29) << " ";
-        cout << arv->Remove(27) << " "; //TODO remoção da segunda raiz
         //cout << arv->Busca(16) << " ";
+        arv->Estado();
         //arv->Insere(99);
     } else {
         ofstream outFile;
@@ -46,7 +45,7 @@ int main(int argc, char** argv) {
         char op;
         int valor;
 
-        status = readFile(dados, "arquivo.txt");
+        status = readFile(dados, "arquivo2.txt");
         //Teste de abertura de arquivo
         if (!status) {
             cout << "Arquivo não pode ser aberto para leitura." << endl;
@@ -62,8 +61,9 @@ int main(int argc, char** argv) {
                         for (int j = 0; j < tam; j++) {
                             dados >> valor;
                             arv->Insere(valor);
-                            cout << "Inserindo o valor " << valor << endl;
+                            cout << "( + ) Inserindo o valor " << valor << endl;
                         }
+                        cout << endl;
                         dados >> op;
                         break;
                     }
@@ -74,10 +74,11 @@ int main(int argc, char** argv) {
                             dados >> valor;
                             int checaRemove = arv->Remove(valor);
                             if (checaRemove)
-                                cout << "O valor " << valor << " foi removido com sucesso" << endl;
+                                cout << "( - ) O valor " << valor << " foi removido com sucesso" << endl;
                             else
-                                cout << "O valor " << valor << " não está presente na arvore" << endl;
+                                cout << "( - ) O valor " << valor << " não está presente na arvore" << endl;
                         }
+                        cout << endl;
                         dados >> op;
                         break;
                     }
@@ -88,35 +89,37 @@ int main(int argc, char** argv) {
                             dados >> valor;
                             int checaBusca = arv->Busca(valor);
                             if (checaBusca)
-                                cout << "O valor " << valor << " está na arvore." << endl;
+                                cout << "( ? ) O valor " << valor << " está na arvore." << endl;
                             else
-                                cout << "O valor " << valor << " não está na arvore." << endl;
+                                cout << "( ? ) O valor " << valor << " não está na arvore." << endl;
                         }
+                        cout << endl;
                         dados >> op;
                         break;
                     }
                     case 'e':
-                    {//TODO
+                    { // estado
+                        arv->Estado();
+                        cout << endl;
+                        dados >> op;
                         break;
                     }
                     case 'f':
-                    {//TODO
-                        break;
-                    }
-                    default:
                     {
+                        cout << endl << "Fim de operação" << endl << endl;
+                        return 0;
                         break;
                     }
                 }
             }
         }
     }
-    cout << endl << "Arvore em Ordem: " << endl;
-    arv->Em_Ordem();
-    cout << endl << endl << "Arvore em Pré-Ordem: " << endl;
-    arv->Pre_Ordem();
-    cout << endl << endl << "Arvore em Pós-Ordem: " << endl;
-    arv->Pos_Ordem();
-    cout << endl;
-    return 0;
+//    cout << endl << "Arvore em Ordem: " << endl;
+//    arv->Em_Ordem();
+//    cout << endl << endl << "Arvore em Pré-Ordem: " << endl;
+//    arv->Pre_Ordem();
+//    cout << endl << endl << "Arvore em Pós-Ordem: " << endl;
+//    arv->Pos_Ordem();
+//    cout << endl;
+//    return 0;
 }

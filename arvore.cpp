@@ -16,6 +16,7 @@ using namespace std;
 Arvore::Arvore() {
     raiz = NULL;
     qtde = 0;
+    folhas = 0;
 }
 
 Arvore::~Arvore() {
@@ -30,24 +31,34 @@ void Arvore::Pos_Ordem() {
     raiz->Pos_Ordem(raiz);
 }
 
-void Arvore::Estado() {
-    int qtdf = raiz->QtdFolhas(raiz);
-    cout << "quantidade de folhas: "<< qtdf << " ";
-    cout << "nivel: " << raiz->altura << " ";
-    cout << "nivel medio: " << raiz->altura/2 << " ";
-    cout << "nos intermediarios: "<< (qtde - qtdf) << " ";
-}
-
 void Arvore::Em_Ordem() {
     raiz->Em_Ordem(raiz);
 }
 
-void Arvore::Estado(){
+void atualiza_altura(No * n) {
+    int alt1 = n->esq ? n->esq->altura : 0;
+    int alt2 = n->dir ? n->dir->altura : 0;
+    n->altura = alt1 > alt2 ? alt1 + 1 : alt2 + 1;
+}
+
+void pre_ordem_altura(No *n) {
+    if (n) {
+        pre_ordem_altura(n->esq);
+        pre_ordem_altura(n->dir);
+        atualiza_altura(n);
+    }
+}
+
+void Arvore::Estado() {
     int qtdf = raiz->QtdFolhas(raiz);
-    cout << "quantidade de folhas: "<< qtdf << " ";
-    cout << "nivel: " << raiz->altura << " ";
-    cout << "nivel medio: " << raiz->altura/2 << " ";
-    cout << "nos intermediarios: "<< (qtde - qtdf) << " ";
+    cout << "_____________________________________________________" << endl;
+    cout << endl << "Estado da arvore:" << endl << endl;
+    cout << "Folhas                             : " << qtdf << endl;
+    pre_ordem_altura(raiz);
+    cout << "Nivel maximo                       : " << raiz->altura << endl;
+    cout << "Nivel medio(maximo/2)              : " << raiz->altura / 2 << endl;
+    cout << "Nos intermediarios(excluso a raiz) : " << (qtde - qtdf - 1) << endl;
+    cout << "_____________________________________________________" << endl;
 }
 
 void Arvore::Insere(int valor) {
@@ -99,10 +110,6 @@ No * No::Insere(No *raiz, No * n) {
     return raiz;
 }
 
-void No::Estado(No *raiz){
-    //TODO
-}
-
 void No::Pre_Ordem(No *raiz) {
     if (raiz) {
         cout << raiz->dado << " ";
@@ -119,16 +126,16 @@ void No::Pos_Ordem(No *raiz) {
     }
 }
 
-int No::QtdFolhas(No *n)  
-{  
-    if(n == NULL)      
-        return 0;  
-    if(n->esq == NULL && n->dir == NULL)  
-        return 1;          
+int No::QtdFolhas(No *n) {
+    if (n == NULL)
+        return 0;
+    if (n->esq == NULL && n->dir == NULL)
+        return 1;
     else
-        return QtdFolhas(n->esq)+  
-            QtdFolhas(n->dir);  
-}  
+        return QtdFolhas(n->esq) +
+        QtdFolhas(n->dir);
+}
+
 void No::Em_Ordem(No *raiz) {
     if (raiz) {
         Em_Ordem(raiz->esq);
@@ -167,7 +174,7 @@ No *No::Remove(int valor, No *raiz, No *pai) {
         No *aux = raiz;
         if (raiz->esq == NULL && raiz->dir == NULL) {
             return NULL;
-        }else if (raiz->esq == NULL || raiz->dir == NULL) {
+        } else if (raiz->esq == NULL || raiz->dir == NULL) {
             //delete one child
             if (raiz->dir == NULL) {
                 // tem um filho a esquerda
@@ -188,7 +195,7 @@ No *No::Remove(int valor, No *raiz, No *pai) {
     } else {
         raiz->dir = Remove(valor, raiz->dir, raiz);
     }
-    if(raiz == NULL) return NULL;
+    if (raiz == NULL) return NULL;
     return raiz;
 }
 

@@ -31,7 +31,7 @@ public:
     No *Captura_Maximo(No *raiz);
     No *Remove(int valor, No *raiz, No *pai);
     No *Insere(No *raiz, No *n);
-    int dado;
+    int dado, altura;
     No *esq, *dir;
 };
 
@@ -48,7 +48,7 @@ public:
     bool Remove(int valor);
     No *Captura_Maximo();
     No *raiz;
-    int qtde;
+    int qtde, folhas;
 };
 
 // =============== MANIPULAÇÃO DE ARQUIVOS================================================
