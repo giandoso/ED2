@@ -30,6 +30,14 @@ void Arvore::Pos_Ordem() {
     raiz->Pos_Ordem(raiz);
 }
 
+void Arvore::Estado() {
+    int qtdf = raiz->QtdFolhas(raiz);
+    cout << "quantidade de folhas: "<< qtdf << " ";
+    cout << "nivel: " << raiz->altura << " ";
+    cout << "nivel medio: " << raiz->altura/2 << " ";
+    cout << "nos intermediarios: "<< (qtde - qtdf) << " ";
+}
+
 void Arvore::Em_Ordem() {
     raiz->Em_Ordem(raiz);
 }
@@ -57,7 +65,8 @@ bool Arvore::Busca(int valor) {
 
 bool Arvore::Remove(int valor) {
     if (raiz->Busca(valor, raiz)) {
-        return raiz->Remove(valor, raiz, NULL);
+        raiz = raiz->Remove(valor, raiz, NULL);
+        return true;
     }
     return false;
 }
@@ -136,65 +145,37 @@ No *No::Captura_Maximo(No* raiz) {
 
 }
 
-bool No::Remove(int valor, No *raiz, No *pai) {
+No *No::Remove(int valor, No *raiz, No *pai) {
     if (raiz == NULL) {
-        return false;
+        return NULL;
     }
     if (valor == raiz->dado) {
         No *aux = raiz;
-        if (raiz->esq == NULL || raiz->dir == NULL) {
+        if (raiz->esq == NULL && raiz->dir == NULL) {
+            return NULL;
+        }else if (raiz->esq == NULL || raiz->dir == NULL) {
             //delete one child
-            if (raiz->esq == NULL && raiz->dir == NULL) {
-                // nao tem filho
-                if (raiz->dado > pai->dado) {
-                    // filho dir
-                    pai->dir = NULL;
-                    free(raiz);
-                } else {
-                    // filho esq
-                    pai->esq = NULL;
-                    free(raiz);
-                }
-                return true;
-            } else if (raiz->dir == NULL) {
+            if (raiz->dir == NULL) {
                 // tem um filho a esquerda
-                if (raiz->dado > pai->dado) {
-                    // filho dir
-                    pai->dir = raiz->esq;
-                    free(raiz);
-                } else {
-                    // filho esq
-                    pai->esq = raiz->esq;
-                    free(raiz);
-                }
-                return true;
+                raiz = raiz->esq;
             } else if (raiz->esq == NULL) {
-                // tem um filho a direita
-                if (raiz->dado > pai->dado) {
-                    // filho dir
-                    pai->dir = raiz->dir;
-                    free(raiz);
-                } else {
-                    // filho esq
-                    pai->esq = raiz->dir;
-                    free(raiz);
-                }
-                return true;
+                raiz = raiz->dir;
             }
         } else {
             //TODO problema qdo no for raiz da arv
             // tem dois filhos
             aux = Captura_Maximo(raiz->esq); // TEM QUE VE ESSA PORRA
             raiz->dado = aux->dado;
-            raiz->esq->Remove(aux->dado, raiz->esq, raiz);
+            raiz->esq = raiz->esq->Remove(aux->dado, raiz->esq, raiz);
             free(aux);
-            return true;
         }
     } else if (valor < raiz->dado) {
-        return Remove(valor, raiz->esq, raiz);
+        raiz->esq = Remove(valor, raiz->esq, raiz);
     } else {
-        return Remove(valor, raiz->dir, raiz);
+        raiz->dir = Remove(valor, raiz->dir, raiz);
     }
+    if(raiz == NULL) return NULL;
+    return raiz;
 }
 
 

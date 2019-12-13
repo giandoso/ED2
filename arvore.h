@@ -29,7 +29,7 @@ public:
     bool Busca(int valor, No *raiz);
     No *Captura_Maximo(No *raiz);
     void Estado(No *raiz);
-    bool Remove(int valor, No *raiz, No *pai);
+    No *Remove(int valor, No *raiz, No *pai);
     No *Insere(No *raiz, No *n);
     int dado;
     No *esq, *dir;
