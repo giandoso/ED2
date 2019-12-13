@@ -43,7 +43,11 @@ void Arvore::Em_Ordem() {
 }
 
 void Arvore::Estado(){
-    //TODO
+    int qtdf = raiz->QtdFolhas(raiz);
+    cout << "quantidade de folhas: "<< qtdf << " ";
+    cout << "nivel: " << raiz->altura << " ";
+    cout << "nivel medio: " << raiz->altura/2 << " ";
+    cout << "nos intermediarios: "<< (qtde - qtdf) << " ";
 }
 
 void Arvore::Insere(int valor) {
@@ -115,6 +119,16 @@ void No::Pos_Ordem(No *raiz) {
     }
 }
 
+int No::QtdFolhas(No *n)  
+{  
+    if(n == NULL)      
+        return 0;  
+    if(n->esq == NULL && n->dir == NULL)  
+        return 1;          
+    else
+        return QtdFolhas(n->esq)+  
+            QtdFolhas(n->dir);  
+}  
 void No::Em_Ordem(No *raiz) {
     if (raiz) {
         Em_Ordem(raiz->esq);

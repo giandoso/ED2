@@ -25,10 +25,10 @@ public:
     ~No(); //Destrutor
     void Pre_Ordem(No *raiz);
     void Pos_Ordem(No *raiz);
+    int QtdFolhas(No *raiz);
     void Em_Ordem(No *raiz);
     bool Busca(int valor, No *raiz);
     No *Captura_Maximo(No *raiz);
-    void Estado(No *raiz);
     No *Remove(int valor, No *raiz, No *pai);
     No *Insere(No *raiz, No *n);
     int dado;
